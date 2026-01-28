@@ -171,6 +171,11 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
+
+	// health check
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("API is running"))
+	})
 	http.HandleFunc("/categories", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
