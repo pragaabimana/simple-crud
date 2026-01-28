@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
 	_ "simple-crud/docs"
 
+	"github.com/joho/godotenv"
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
@@ -164,6 +166,11 @@ func parseID(path string) int {
 // @host localhost:8080
 // @BasePath /
 func main() {
+	_ = godotenv.Load()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 	http.HandleFunc("/categories", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
@@ -190,6 +197,6 @@ func main() {
 
 	http.Handle("/swagger/", httpSwagger.WrapHandler)
 
-	log.Println("server running at :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("server running at :", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
