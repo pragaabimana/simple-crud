@@ -1,0 +1,121 @@
+basePath: /
+definitions:
+  main.Category:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Simple CRUD using net/http + Swagger
+  title: Simple Category API
+  version: "1.0"
+paths:
+  /categories:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Category'
+            type: array
+      summary: Get all categories
+      tags:
+      - Category
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Category
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.Category'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Category'
+      summary: Create category
+      tags:
+      - Category
+  /categories/{id}:
+    delete:
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Delete category
+      tags:
+      - Category
+    get:
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Category'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get category detail
+      tags:
+      - Category
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Category
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Category'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Update category
+      tags:
+      - Category
+swagger: "2.0"
